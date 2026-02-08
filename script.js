@@ -1,8 +1,12 @@
-// Simple cart functionality
+// ----------------------------
+// Simple Cart Functionality
+// ----------------------------
+
 let cart = [];
 let cartCount = 0;
 let cartTotal = 0;
 
+// Add to cart buttons
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const product = button.getAttribute('data-product');
@@ -14,21 +18,33 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     });
 });
 
+// Update cart display
 function updateCart() {
-    document.getElementById('cart-count').textContent = cartCount;
-    document.getElementById('cart-total').textContent = cartTotal.toFixed(2);
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = cart.map(item => `<p>${item.product} - $${item.price}</p>`).join('');
+    const cartCountEl = document.getElementById('cart-count');
+    const cartTotalEl = document.getElementById('cart-total');
+    const cartItemsEl = document.getElementById('cart-items');
+
+    if(cartCountEl) cartCountEl.textContent = cartCount;
+    if(cartTotalEl) cartTotalEl.textContent = cartTotal.toFixed(2);
+
+    if(cartItemsEl) {
+        cartItemsEl.innerHTML = cart.map(item => `<p>${item.product} - $${item.price}</p>`).join('');
+    }
 }
 
-// Category filtering
+// ----------------------------
+// Category Filtering
+// ----------------------------
 document.querySelectorAll('.category-btn').forEach(button => {
     button.addEventListener('click', () => {
+        // Remove active class from all buttons
         document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
+
         const category = button.getAttribute('data-category');
+
         document.querySelectorAll('.product-card').forEach(card => {
-            if (category === 'all' || card.getAttribute('data-category') === category) {
+            if(category === 'all' || card.getAttribute('data-category') === category) {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
@@ -37,7 +53,12 @@ document.querySelectorAll('.category-btn').forEach(button => {
     });
 });
 
-// Smooth scroll
+// ----------------------------
+// Smooth Scroll
+// ----------------------------
 function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    const section = document.getElementById(sectionId);
+    if(section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
 }
